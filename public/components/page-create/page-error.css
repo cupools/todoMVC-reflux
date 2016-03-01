@@ -1,0 +1,13 @@
+.page-error {
+    color: #f00;
+    font-size: 12px;
+    display: none;
+}
+.page-error::before {
+    content: '';
+    display: block;
+    width: 400px;
+    height: 300px;
+    background: url(/public/images/error.png);
+    background-size: 400px;
+}
