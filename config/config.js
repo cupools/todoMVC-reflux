@@ -1,11 +1,15 @@
 module.exports = {
+    project: 'bootstrap',
     alias: {
         
     },
     externals: {
         'zepto': 'Zepto'
     },
-    viewPath: '/public/views/',
-    viewEngine: 'handlebars',
+    partials: 'full',
+    viewEngine: {
+        engine: 'handlebars',
+        extname: 'handlebars'
+    },
     HMR: true
 };

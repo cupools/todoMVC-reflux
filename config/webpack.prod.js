@@ -1,39 +1,52 @@
 'use strict';
 
 var config = require('./config'),
-    webpack = require('webpack');
+    utils = require('../server/utils'),
+    webpack = require('webpack'),
+    HtmlWebpackPlugin = require('html-webpack-plugin'),
+    ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 
 module.exports = {
-    entry: {
-        index: ['./public/views/index/index.js'],
-        aboutus: ['./public/views/aboutus/aboutus.js']
-    },
+    entry: utils.getEntrys(),
     output: {
         path: 'build/',
-        publicPath: '/public/assets/',
-        chunkFilename: 'common.js',
-        filename: '[name].js'
+        publicPath: '',
+        // chunkFilename: 'common.js',
+        filename: '[name].[hash:6].js'
     },
     module: {
         loaders: [{
             test: /\.css$/,
-            loader: 'style-loader!css-loader'
+            loader: ExtractTextPlugin.extract('style', 'css', {
+                publicPath: './'
+            })
         }, {
             test: /\.scss$/,
-            loader: 'style!css!sass?sourceMap'
+            loader: 'style!css!sass'
         }, {
             test: /\.styl$/,
-            loader: 'style!css!stylus?sourceMap'
+            loader: 'style!css!stylus'
         }, {
             test: /\.(png|jpg)$/,
-            loader: 'url-loader?limit=8192'
+            loader: 'url-loader?name=[name].[hash:6].[ext]&limit=8192'
         }]
     },
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin('common.js'),
+        new ExtractTextPlugin('[name].[hash:6].css'),
+        new webpack.optimize.CommonsChunkPlugin('common', 'common.[hash:6].js'),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"production"'
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'aboutus.html',
+            template: 'build/aboutus.html',
+            excludeChunks: ['index']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: 'build/index.html',
+            excludeChunks: ['aboutus']
         }),
     ],
     alias: config.alias || {},
@@ -42,5 +55,5 @@ module.exports = {
         colors: true,
         modules: true,
         reasons: true
-    },
+    }
 };

@@ -9,26 +9,30 @@
   "author": "liyh",
   "license": "MIT",
   "devDependencies": {
+    "async": "^1.5.2",
+    "consolidate": "^0.14.0",
     "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.8.5",
     "grunt": "^0.4.5",
+    "grunt-compile-handlebars": "^2.0.1",
     "grunt-express-server": "^0.5.2",
     "grunt-webpack": "^1.0.11",
     "mockjs": "^1.0.1-beta2",
     "stylus-loader": "^1.5.1",
+    "url-loader": "^0.5.7",
     "webpack": "^1.12.13",
     "webpack-dev-middleware": "^1.5.1",
+    "webpack-dev-server": "^1.14.1",
     "webpack-hot-middleware": "^2.7.1"
   },
   "dependencies": {
     "css-loader": "^0.23.1",
     "express": "^4.13.4",
-    "express-handlebars": "^3.0.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "grunt-contrib-watch": "^0.6.1",
     "html-webpack-plugin": "^2.9.0",
     "normalize.css": "^3.0.3",
     "style-loader": "^0.13.0",
-    "webpack-dev-server": "^1.14.1",
     "weui": "^0.4.0"
   }
 }
