@@ -6,6 +6,7 @@ module.exports = {
     externals: {
         'zepto': 'Zepto'
     },
+    views: '/public/views/',
     partials: 'full',
     viewEngine: {
         engine: 'handlebars',

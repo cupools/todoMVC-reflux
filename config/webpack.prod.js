@@ -1,7 +1,7 @@
 'use strict';
 
 var config = require('./config'),
-    utils = require('../server/utils'),
+    utils = require('./utils'),
     webpack = require('webpack'),
     HtmlWebpackPlugin = require('html-webpack-plugin'),
     ExtractTextPlugin = require("extract-text-webpack-plugin");
@@ -12,7 +12,6 @@ module.exports = {
     output: {
         path: 'build/',
         publicPath: '',
-        // chunkFilename: 'common.js',
         filename: '[name].[hash:6].js'
     },
     module: {
@@ -30,6 +29,9 @@ module.exports = {
         }, {
             test: /\.(png|jpg)$/,
             loader: 'url-loader?name=[name].[hash:6].[ext]&limit=8192'
+        }, {
+            test: /\.html$/,
+            loader: 'html-loader?root=../&attrs[]=img:src&interpolate'
         }]
     },
     plugins: [

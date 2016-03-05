@@ -57,7 +57,7 @@ module.exports = function(grunt) {
         var consolidate = require('consolidate'),
             async = require('async'),
             app = require('./server/app'),
-            utils = require('./server/utils'),
+            utils = require('./config/utils'),
             done = this.async();
 
         grunt.log.subhead('delete ./build');

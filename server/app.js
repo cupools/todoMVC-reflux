@@ -9,8 +9,8 @@ var express = require('express'),
     consolidate = require('consolidate'),
     Mock = require('mockjs'),
     mockData = require('./mock'),
-    utils = require('./utils'),
     config = require('../config/config'),
+    utils = require('../config/utils'),
     app = express(), compiler;
 
 // 模板引擎

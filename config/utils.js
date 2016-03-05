@@ -37,6 +37,9 @@ module.exports = {
             ret[self.getBaseName(item)] = './' + item;
         });
 
+        // ret['index.html'] = './build/index.html';
+        // ret['aboutus.html'] = './build/aboutus.html';
+
         return ret;
     },
     getViews: function() {
