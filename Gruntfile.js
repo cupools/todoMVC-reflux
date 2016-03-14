@@ -1,6 +1,8 @@
 module.exports = function(grunt) {
     'use strict';
 
+    var utils = require('./config/utils');
+
     var initConfig = {
         pkg: grunt.file.readJSON('package.json'),
         meta: {
@@ -27,6 +29,14 @@ module.exports = function(grunt) {
                     spawn: false
                 }
             }
+        },
+        weinre: {
+            dev: {
+                options: {
+                    httpPort: 9001,
+                    boundHost: utils.getIP()
+                }
+            }
         }
     };
 
@@ -34,7 +44,7 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-express-server');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-compile-handlebars');
+    grunt.loadNpmTasks('grunt-weinre');
     grunt.loadNpmTasks('grunt-webpack');
 
     grunt.initConfig(initConfig);
@@ -45,40 +55,14 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('release', [
-        'render',
+        'clean',
         'webpack:release'
     ]);
 
-    // 构建模板任务
-    grunt.registerTask('render', 'exports template to html', render);
-
-    // 模板输出为 html 至 build 文件夹
-    function render() {
-        var consolidate = require('consolidate'),
-            async = require('async'),
-            app = require('./server/app'),
-            utils = require('./config/utils'),
-            done = this.async();
-
+    // 重新构建 build
+    grunt.registerTask('clean', 'delete build directory', function() {
         grunt.log.subhead('delete ./build');
         grunt.file.delete('./build');
-
-        grunt.log.subhead('building static html files');
-
-        async.each(utils.getViews(), function(file, callback) {
-            app.render(file, {
-                partials: utils.getPartials(file)
-            }, function(err, html) {
-                grunt.file.write('build/' + utils.getBaseName(file) + '.html', html);
-                grunt.log.ok('build/' + utils.getBaseName(file) + '.html');
-                callback();
-            });
-        }, function(err) {
-            if(err) {
-                grunt.log.error(err.message)
-            }
-            done();
-        });
-    }
+    });
 
 };

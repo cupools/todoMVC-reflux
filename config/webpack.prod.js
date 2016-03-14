@@ -1,18 +1,17 @@
 'use strict';
 
-var config = require('./config'),
+var CONFIG = require('./config'),
     utils = require('./utils'),
     webpack = require('webpack'),
-    HtmlWebpackPlugin = require('html-webpack-plugin'),
-    ExtractTextPlugin = require("extract-text-webpack-plugin");
+    ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 
-module.exports = {
+var prodConfig = {
     entry: utils.getEntrys(),
     output: {
         path: 'build/',
         publicPath: '',
-        filename: '[name].[hash:6].js'
+        filename: utils.appendHash('[name].js')
     },
     module: {
         loaders: [{
@@ -28,34 +27,46 @@ module.exports = {
             loader: 'style!css!stylus'
         }, {
             test: /\.(png|jpg)$/,
-            loader: 'url-loader?name=[name].[hash:6].[ext]&limit=8192'
+            loader: 'url',
+            query: {
+                name: utils.appendHash('[name].[ext]'),
+                limit: 8192
+            }
         }, {
             test: /\.html$/,
-            loader: 'html-loader?root=../&attrs[]=img:src&interpolate'
-        }]
+            loader: 'html?interpolate&root=../../..'
+        }],
+        preLoaders: [
+            {
+                test: /\.js$/,
+                loader: 'jshint',
+                exclude: /node_modules/
+            }
+        ]
     },
     plugins: [
-        new ExtractTextPlugin('[name].[hash:6].css'),
-        new webpack.optimize.CommonsChunkPlugin('common', 'common.[hash:6].js'),
+        new ExtractTextPlugin(utils.appendHash('[name].css')),
+        new webpack.optimize.CommonsChunkPlugin('common', utils.appendHash('common.js')),
+        new webpack.optimize.UglifyJsPlugin({
+            except: ['$', 'exports', 'require']
+        }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"production"'
-        }),
-        new HtmlWebpackPlugin({
-            filename: 'aboutus.html',
-            template: 'build/aboutus.html',
-            excludeChunks: ['index']
-        }),
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: 'build/index.html',
-            excludeChunks: ['aboutus']
-        }),
+        })
     ],
-    alias: config.alias || {},
-    externals: config.externals || {},
+    alias: CONFIG.alias || {},
+    externals: CONFIG.externals || {},
     stats: {
         colors: true,
         modules: true,
         reasons: true
+    },
+    jshint: {
+        failOnHint: true,
     }
+
 };
+
+utils.expandPlugins(prodConfig);
+
+module.exports = prodConfig;

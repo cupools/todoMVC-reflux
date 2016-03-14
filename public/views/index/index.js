@@ -14,8 +14,8 @@ function init() {
     $('.weui_tabbar_item').bind('click', toggle);
 }
 
-function toggle() {
-    var el = $(this),
+function toggle(ev) {
+    var el = $(ev.target),
         target = el.attr('data-target');
 
     $('.weui_tabbar_item').removeClass('weui_bar_item_on');

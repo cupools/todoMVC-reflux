@@ -1,24 +1,22 @@
 'use strict';
 
 var config = require('./config'),
+    utils = require('./utils'),
     webpack = require('webpack');
 
 
-module.exports = {
-    entry: {
-        index: ['./public/views/index/index.js', 'webpack-hot-middleware/client', 'webpack/hot/dev-server'],
-        aboutus: ['./public/views/aboutus/aboutus.js', 'webpack-hot-middleware/client', 'webpack/hot/dev-server']
-    },
+var devConfig = {
+    entry: utils.middleware(utils.getEntrys(), 'webpack-hot-middleware/client?reload=true', 'webpack/hot/dev-server'),
     output: {
         path: '/',
-        publicPath: '/public/assets/',
+        publicPath: '/',
         chunkFilename: 'common.js',
         filename: '[name].js'
     },
     module: {
         loaders: [{
             test: /\.css$/,
-            loader: 'style-loader!css-loader'
+            loader: 'style!css'
         }, {
             test: /\.scss$/,
             loader: 'style!css!sass?sourceMap'
@@ -27,11 +25,13 @@ module.exports = {
             loader: 'style!css!stylus?sourceMap'
         }, {
             test: /\.(png|jpg)$/,
-            loader: 'url-loader?limit=8192'
+            loader: 'url?limit=8192'
+        }, {
+            test: /\.html$/,
+            loader: 'html?interpolate'
         }]
     },
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin('common.js'), 
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"development"'
         }),
@@ -45,3 +45,7 @@ module.exports = {
     resolve: {},
     devtool: 'cheap-module-eval-source-map'
 };
+
+utils.expandPlugins(devConfig);
+
+module.exports = devConfig;
