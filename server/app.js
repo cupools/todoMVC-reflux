@@ -12,11 +12,6 @@ var express = require('express'),
     app = express(),
     compiler;
 
-// router
-app.get(/\/[\w]+$/, function(req, res, next) {
-    next();
-});
-
 // inject script for weinre
 if (CONFIG.weinre.inject) {
     app.use(require('connect-inject')({

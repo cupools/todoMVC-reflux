@@ -1,16 +1,15 @@
 'use strict';
 
-var config = require('./config'),
+var CONFIG = require('./config'),
     utils = require('./utils'),
     webpack = require('webpack');
 
 
 var devConfig = {
-    entry: utils.middleware(utils.getEntrys(), 'webpack-hot-middleware/client?reload=true', 'webpack/hot/dev-server'),
+    entry: CONFIG.HMR ? utils.middleware(utils.getDevEntrys(), 'webpack-hot-middleware/client?reload=true', 'webpack/hot/dev-server') : utils.getEntrys(),
     output: {
         path: '/',
         publicPath: '/',
-        chunkFilename: 'common.js',
         filename: '[name].js'
     },
     module: {
@@ -34,14 +33,10 @@ var devConfig = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"development"'
-        }),
-        // middleware required
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin()
+        })
     ],
-    alias: config.alias || {},
-    externals: config.externals || {},
+    alias: CONFIG.alias || {},
+    externals: CONFIG.externals || {},
     resolve: {},
     devtool: 'cheap-module-eval-source-map'
 };

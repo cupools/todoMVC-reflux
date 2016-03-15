@@ -1,0 +1,5 @@
+{
+    "name": "dialog",
+    "description": "easy dialog plugin",
+    "main": "main.js"
+}

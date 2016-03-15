@@ -24,7 +24,7 @@ function factory(options) {
         });
 
         return ret;
-    }
+    };
 }
 
 /**
@@ -56,6 +56,7 @@ function middleware(obj) {
  * expand plugins of webpack options
  */
 function expandPlugins(options) {
+    // html-webpack-plugin
     var HtmlWebpackPlugin = require('html-webpack-plugin');
 
     var map = factory({
@@ -73,7 +74,6 @@ function expandPlugins(options) {
             });
         };
 
-    // insert plugins in webpack options
     keys.map(function(key) {
         options.plugins.push(new HtmlWebpackPlugin({
             filename: key,
@@ -82,8 +82,23 @@ function expandPlugins(options) {
         }));
     });
 
-    // insert specified loader in webpack options
-    // according to /config/config.js
+    // HRM middleware
+    var webpack = require('webpack');
+    
+    if(CONFIG.HMR) {
+        options.plugins.push(
+            new webpack.optimize.OccurenceOrderPlugin(),
+            new webpack.HotModuleReplacementPlugin(),
+            new webpack.NoErrorsPlugin()
+        );
+    }
+
+}
+
+/**
+ * insert specified loader in webpack options
+ */
+function extendLoader(options) {
 
 }
 
@@ -123,6 +138,12 @@ function getIP() {
 }
 
 module.exports = {
+    getDevEntrys: factory({
+        reg: 'public/views/*/*.js',
+        valFn: function(path) {
+            return ['./' + path, ('./' + path).replace(/js$/, 'html')];
+        }
+    }),
     getEntrys: factory({
         reg: 'public/views/*/*.js',
         valFn: function(path) {
@@ -140,4 +161,4 @@ module.exports = {
     expandPlugins: expandPlugins,
     appendHash: appendHash,
     getIP: getIP
-}
+};

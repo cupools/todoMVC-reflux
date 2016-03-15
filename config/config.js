@@ -7,11 +7,13 @@ module.exports = {
         'zepto': 'Zepto'
     },
     hash: 6,
-    views: '/public/views/',
-    partials: 'full',
+    optimize: {
+        imageLimit: 8192
+    },
     weinre: {
-        inject: true,
+        inject: false,
         port: 9001
     },
+    liveload: false,
     HMR: true
 };
