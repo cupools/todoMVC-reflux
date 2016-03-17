@@ -5,8 +5,8 @@ import Reflux from 'reflux';
 import pageActions from '../actions/pageActions';
 
 const PAGE = {
-    LIST: '#list-wrap',
-    EDIT: '#edit-wrap'
+    LIST: '#list_wrap',
+    EDIT: '#edit_wrap'
 };
 
 export default Reflux.createStore({

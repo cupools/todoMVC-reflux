@@ -8,7 +8,9 @@ import './index.css';
 import $ from 'zepto';
 import pageActions from 'js/actions/pageActions';
 import pageStore from 'js/stores/pageStore';
+
 import 'components/list';
+import 'components/edit';
 
 initApp();
 

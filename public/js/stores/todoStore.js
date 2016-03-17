@@ -4,28 +4,48 @@
 import Reflux from 'reflux';
 import todoActions from '../actions/todoActions';
 
-let identify = 0;
+let identify = 0,
+    storage = {
+        get: () => {
+            let list = JSON.parse(window.localStorage.getItem('todo') || '[]');
+            return list.length ? createIdentify(list) : createIdentify([
+                    {
+                        info: '到西园拿快递',
+                        done: false
+                    }, {
+                        info: '打扫寝室卫生',
+                        done: false
+                    }, {
+                        info: '收拾旧书',
+                        done: false
+                    }, {
+                        info: '聚会吃宵夜',
+                        done: true
+                    }
+                ]);
+        },
+        set: (list) => {
+            window.localStorage.setItem('todo', JSON.stringify(list));
+        },
+        clean: () => {
+            return window.localStorage.removeItem('todo');
+        }
+    };
+
+function createIdentify(list) {
+    return list.map(item => {
+        item.id = ++ identify;
+        return item;
+    });
+}
 
 export default Reflux.createStore({
     listenables: [todoActions],
-    list: [{
-        id: 0,
-        info: '拖地',
-        done: false
-    }, {
-        id: 1,
-        info: '洗澡',
-        done: false
-    }, {
-        id: 2,
-        info: '扫地',
-        done: false
-    }, {
-        id: 3,
-        info: '洗碗',
-        done: true
-    }],
+    list: [],
     status: false,
+    init: function() {
+        this.list = storage.get();
+    },
     onAddItem: function(info) {
         this.updateList([...this.list, {
             info: info,
@@ -39,7 +59,6 @@ export default Reflux.createStore({
     onFinishItem: function(id) {
         this.updateList(this.list.map(item => {
             if(id.indexOf(item.id) > -1) {
-                console.log(item)
                 item.done = true;
             }
             return item;
@@ -51,6 +70,7 @@ export default Reflux.createStore({
     },
     updateList: function(list) {
         this.list = [...list];
+        storage.set(this.list);
         this.render();
     },
     render: function() {

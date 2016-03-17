@@ -1,0 +1,9 @@
+.button-area {
+    margin-top: 20px;
+    text-align: center;
+}
+.button-area .weui_btn {
+    display: inline-block;
+    margin: 0 1%;
+    width: 45%;
+}
