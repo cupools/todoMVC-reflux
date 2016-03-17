@@ -14,6 +14,10 @@ var devConfig = {
     },
     module: {
         loaders: [{
+            test: /\.js$/,
+            loader: 'babel?presets=es2015',
+            excludes: /node_modules/
+        }, {
             test: /\.css$/,
             loader: 'style!css'
         }, {
@@ -37,7 +41,9 @@ var devConfig = {
     ],
     alias: CONFIG.alias || {},
     externals: CONFIG.externals || {},
-    resolve: {},
+    resolve: {
+        root: [process.cwd() + '/node_modules', process.cwd() + '/public']
+    },
     devtool: 'cheap-module-eval-source-map'
 };
 

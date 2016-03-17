@@ -150,12 +150,6 @@ module.exports = {
             return './' + path;
         }
     }),
-    getRouter: factory({
-        reg: 'public/views/*/*.html',
-        keyFn: function(path) {
-            return '/' + getBaseName(path);
-        }
-    }),
     getBaseName: getBaseName,
     middleware: middleware,
     expandPlugins: expandPlugins,

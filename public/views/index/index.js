@@ -1,31 +1,28 @@
+/*jshint esnext:true*/
 'use strict';
 
-require('normalize.css');
-require('weui');
-require('./index.css');
+import 'css/normalize.css';
+import 'weui';
+import './index.css';
 
-require('../../components/todo/todo.js');
-require('../../components/done/done.js');
+import $ from 'zepto';
+import pageActions from 'js/actions/pageActions';
+import pageStore from 'js/stores/pageStore';
+import 'components/list';
 
-var $ = require('zepto');
+initApp();
 
-function init() {
-    $('#tab-todo').addClass('tab-active');
-    $('.weui_tabbar_item').bind('click', toggle);
+function initApp() {
+    listener();
+    pageActions.render.list();
 }
 
-function toggle() {
-    var el = $(this),
-        target = el.attr('data-target');
-
-    $('.weui_tabbar_item').removeClass('weui_bar_item_on');
-    el.addClass('weui_bar_item_on');
-
-    $('.tab').removeClass('tab-active');
-    $('#' + target).addClass('tab-active');
+function listener() {
+    pageStore.listen(({page}) => {
+        $('section').hide();
+        $(page).show();
+    });
 }
-
-init();
 
 if(module.hot) {
     module.hot.accept();

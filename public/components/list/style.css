@@ -1,0 +1,20 @@
+.crossline {
+    text-decoration: line-through;
+}
+.button-space {
+    margin: 20px 0.77em;
+}
+.toggle-btn {
+    position: fixed;
+    top: 70%;
+    right: 0;
+    padding: 10px 10px 10px 20px;
+    color: #888;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 20px 0 0 20px;
+}
+.toggle-btn:active {
+    background: #fbfbfb;
+
+}

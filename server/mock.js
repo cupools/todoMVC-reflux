@@ -40,10 +40,10 @@ module.exports = [{
     path: '/api3',
     delay: 20,
     data: {
-        "data|10": [{
-            "cover": MOCK.Random.image('70x100', '#00405d', '#FFF', '10:7'),
-            "link": MOCK.Random.url(),
-            "score|+1": 1
+        'data|10': [{
+            'cover': MOCK.Random.image('70x100', '#00405d', '#FFF', '10:7'),
+            'link': MOCK.Random.url(),
+            'score|+1': 1
         }]
     }
 }];

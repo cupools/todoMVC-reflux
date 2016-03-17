@@ -1,0 +1,11 @@
+{{# for(var i=0; i<list.length; i++) { }}
+<label class="weui_cell weui_check_label" for="s{{list[i].id}}">
+    <div class="weui_cell_hd">
+        <input type="checkbox" class="weui_check" id="s{{list[i].id}}">
+        <i class="weui_icon_checked"></i>
+    </div>
+    <div class="weui_cell_bd weui_cell_primary">
+        <p class="{{status > 0 ? 'crossline' : ''}}">{{list[i].info}}</p>
+    </div>
+</label>
+{{# } }}

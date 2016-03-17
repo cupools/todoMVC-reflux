@@ -15,6 +15,10 @@ var prodConfig = {
     },
     module: {
         loaders: [{
+            test: /\.js$/,
+            loader: 'babel?presets=es2015',
+            excludes: /node_modules/
+        }, {
             test: /\.css$/,
             loader: ExtractTextPlugin.extract('style', 'css', {
                 publicPath: './'
@@ -34,7 +38,7 @@ var prodConfig = {
             }
         }, {
             test: /\.html$/,
-            loader: 'html?interpolate&root=../../..'
+            loader: 'html?interpolate&-minimize'
         }],
         preLoaders: [
             {
@@ -56,6 +60,9 @@ var prodConfig = {
     ],
     alias: CONFIG.alias || {},
     externals: CONFIG.externals || {},
+    resolve: {
+        root: [process.cwd() + '/node_modules', process.cwd() + '/public']
+    },
     stats: {
         colors: true,
         modules: true,
@@ -64,7 +71,6 @@ var prodConfig = {
     jshint: {
         failOnHint: true,
     }
-
 };
 
 utils.expandPlugins(prodConfig);
