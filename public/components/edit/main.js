@@ -22,10 +22,10 @@ function init() {
 }
 
 function listener() {
-    pageStore.listen(({page}) => {
+    pageStore.listen(() => {
         dom.textarea.val('');
         dom.textarea.focus();
-    })
+    });
 }
 
 function bindEvent() {
@@ -38,5 +38,5 @@ function bindEvent() {
 
     dom.quit.on('click', function() {
         pageActions.render.list();
-    })
+    });
 }

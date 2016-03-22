@@ -1,5 +1,43 @@
+@import "../../font/font.css";
+
+.aboutus-wrap {
+    font-family: 'lanting';
+}
 .banner {
     padding-bottom: 50%;
     background: url(../../images/banner.png) no-repeat;
     background-size: 100%;
+}
+.smiley {
+    position: relative;
+    margin-top: 10px;
+    width: 100%;
+    font-size: 0;
+}
+.smiley li {
+    display: inline-block;
+    text-align: center;
+    width: 25%;
+}
+.smiley li::after {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+}
+.smiley li:nth-child(1)::after {
+    background: url(../../images/smiley/Smiley-1_256.png) no-repeat;
+    background-size: 40px 40px;
+}
+.smiley li:nth-child(2)::after {
+    background: url(../../images/smiley/Smiley-2_256.png) no-repeat;
+    background-size: 40px 40px;
+}
+.smiley li:nth-child(3)::after {
+    background: url(/public/images/smiley/Smiley-3_256.png) no-repeat;
+    background-size: 40px 40px;
+}
+.smiley li:nth-child(4)::after {
+    background: url(/public/images/smiley/Smiley-4_256.png) no-repeat;
+    background-size: 40px 40px;
 }

@@ -13,7 +13,7 @@ var express = require('express'),
     compiler;
 
 // inject script for weinre
-if (CONFIG.weinre.inject) {
+if (CONFIG.weinre.enable && CONFIG.weinre.inject) {
     app.use(require('connect-inject')({
         snippet: '<script src=\"http://' + utils.getIP() + ':' + CONFIG.weinre.port + '/target/target-script-min.js#' + CONFIG.name + '\"></script>'
     }));
@@ -22,7 +22,7 @@ if (CONFIG.weinre.inject) {
 // webpack middleware
 compiler = webpack(webpackDevConf);
 app.use(webpackDevMiddleware(compiler, {
-    noInfo: false,
+    noInfo: true,
     quiet: false,
     lazy: false,
     watchOptions: {

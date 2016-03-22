@@ -30,15 +30,15 @@ var prodConfig = {
             test: /\.styl$/,
             loader: 'style!css!stylus'
         }, {
-            test: /\.(png|jpg)$/,
+            test: /\.(png|jpg|ttf)$/,
             loader: 'url',
             query: {
-                name: utils.appendHash('[name].[ext]'),
-                limit: 8192
+                limit: 8172,
+                name: utils.appendHash('[name].[ext]')
             }
         }, {
             test: /\.html$/,
-            loader: 'html?interpolate&-minimize'
+            loader: 'html?-minimize&interpolate'
         }],
         preLoaders: [
             {
@@ -65,7 +65,7 @@ var prodConfig = {
     },
     stats: {
         colors: true,
-        modules: true,
+        modules: false,
         reasons: true
     },
     jshint: {

@@ -1,0 +1,21 @@
+{
+  "name": "bootstrap",
+  "description": "frontend bootstrap",
+  "main": "Gruntfile.js",
+  "authors": [
+    "liyh"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}

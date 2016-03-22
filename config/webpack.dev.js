@@ -19,7 +19,7 @@ var devConfig = {
             excludes: /node_modules/
         }, {
             test: /\.css$/,
-            loader: 'style!css'
+            loader: 'style!css?importLoaders=1'
         }, {
             test: /\.scss$/,
             loader: 'style!css!sass?sourceMap'
@@ -27,8 +27,12 @@ var devConfig = {
             test: /\.styl$/,
             loader: 'style!css!stylus?sourceMap'
         }, {
-            test: /\.(png|jpg)$/,
-            loader: 'url?limit=8192'
+            test: /\.(png|jpg|ttf)$/,
+            loader: 'url',
+            query: {
+                name: '[path][name].[ext]',
+                limit: 1
+            }
         }, {
             test: /\.html$/,
             loader: 'html?interpolate'

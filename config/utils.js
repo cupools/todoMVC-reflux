@@ -83,14 +83,16 @@ function expandPlugins(options) {
     });
 
     // HRM middleware
-    var webpack = require('webpack');
-    
     if(CONFIG.HMR) {
-        options.plugins.push(
-            new webpack.optimize.OccurenceOrderPlugin(),
-            new webpack.HotModuleReplacementPlugin(),
-            new webpack.NoErrorsPlugin()
-        );
+        var webpack = require('webpack');
+        
+        if(CONFIG.HMR) {
+            options.plugins.push(
+                new webpack.optimize.OccurenceOrderPlugin(),
+                new webpack.HotModuleReplacementPlugin(),
+                new webpack.NoErrorsPlugin()
+            );
+        }
     }
 
 }
