@@ -43,14 +43,13 @@ var devConfig = {
             'process.env.NODE_ENV': '"development"'
         })
     ],
-    alias: CONFIG.alias || {},
-    externals: CONFIG.externals || {},
-    resolve: {
-        root: [process.cwd() + '/node_modules', process.cwd() + '/public']
-    },
+    alias: {},
+    externals: {},
+    resolve: {},
     devtool: 'cheap-module-eval-source-map'
 };
 
-utils.expandPlugins(devConfig);
+// extend webpack options by config/config.js
+utils.extendOptions(devConfig);
 
 module.exports = devConfig;

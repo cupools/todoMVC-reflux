@@ -31,7 +31,14 @@ function factory(options) {
  * get basename in path
  */
 function getBaseName(path) {
-    return /([^\/]+?)\.\w+$/.exec(path)[1];
+    return require('path').basename(path, getExtname(path));
+}
+
+/**
+ * get extname in path
+ */
+function getExtname(path) {
+    return require('path').extname(path);
 }
 
 /**
@@ -56,7 +63,7 @@ function middleware(obj) {
  * expand plugins of webpack options
  */
 function expandPlugins(options) {
-    // html-webpack-plugin
+    // html-webpack-plugin, build html template
     var HtmlWebpackPlugin = require('html-webpack-plugin');
 
     var map = factory({
@@ -94,7 +101,6 @@ function expandPlugins(options) {
             );
         }
     }
-
 }
 
 /**
@@ -105,18 +111,53 @@ function extendLoader(options) {
 }
 
 /**
+ * extend webpack options
+ */
+function extendOptions(options) {
+
+    expandPlugins(options);
+    extendLoader(options);
+
+    var deepAssign = require('deep-assign');
+    deepAssign(options, CONFIG.webpack);
+}
+
+/**
+ * name output by config, includes [hash] and [path]
+ */
+function name(file) {
+    file = appendHash(file);
+    return file;
+}
+
+/**
  * append hash to specified file
  */
 function appendHash(file) {
     var reg = /([\w\W]+)(\.[^\.]+)$/,
         tmpl = '.[hash:\\d]',
         m = reg.exec(file),
-        hash = CONFIG.hash;
+        hash = CONFIG.optimize.hash;
 
     if (hash && m && m[1] && m[2]) {
         return m[1] + tmpl.replace(/\\d/, hash) + m[2];
     } else {
         return file;
+    }
+}
+
+/**
+ * append path to specified file
+ */
+function appendPath(file) {
+    var reg = {
+            img: /png|jpg|jpeg|gif|webp/,
+            js: /js/,
+            css: /css/
+        };
+
+    if(reg.img.exec(file)) {
+
     }
 }
 
@@ -153,8 +194,9 @@ module.exports = {
         }
     }),
     getBaseName: getBaseName,
+    name: name,
     middleware: middleware,
-    expandPlugins: expandPlugins,
+    extendOptions: extendOptions,
     appendHash: appendHash,
     getIP: getIP
 };

@@ -47,6 +47,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-weinre');
     grunt.loadNpmTasks('grunt-webpack');
 
+    grunt.registerTask('weinre', [
+        'weinre'
+    ]);
+
     grunt.registerTask('dev', [
         'express:dev',
         'watch'

@@ -5,13 +5,12 @@ var CONFIG = require('./config'),
     webpack = require('webpack'),
     ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-
 var prodConfig = {
     entry: utils.getEntrys(),
     output: {
         path: 'build/',
         publicPath: '',
-        filename: utils.appendHash('[name].js')
+        filename: utils.name('[name].js')
     },
     module: {
         loaders: [{
@@ -20,7 +19,7 @@ var prodConfig = {
             excludes: /node_modules/
         }, {
             test: /\.css$/,
-            loader: ExtractTextPlugin.extract('style', 'css', {
+            loader: ExtractTextPlugin.extract('css', {
                 publicPath: './'
             })
         }, {
@@ -33,46 +32,33 @@ var prodConfig = {
             test: /\.(png|jpg|ttf)$/,
             loader: 'url',
             query: {
-                limit: 8172,
-                name: utils.appendHash('[name].[ext]')
+                name: utils.name('[name].[ext]'),
+                limit: 8172
             }
         }, {
             test: /\.html$/,
             loader: 'html?-minimize&interpolate'
-        }],
-        preLoaders: [
-            {
-                test: /\.js$/,
-                loader: 'jshint',
-                exclude: /node_modules/
-            }
-        ]
+        }]
     },
     plugins: [
-        new ExtractTextPlugin(utils.appendHash('[name].css')),
-        new webpack.optimize.CommonsChunkPlugin('common', utils.appendHash('common.js')),
-        new webpack.optimize.UglifyJsPlugin({
-            except: ['$', 'exports', 'require']
-        }),
+        new ExtractTextPlugin(utils.name('[name].css')),
+        new webpack.optimize.CommonsChunkPlugin('common', utils.name('common.js')),
+        new webpack.optimize.UglifyJsPlugin(),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"production"'
         })
     ],
-    alias: CONFIG.alias || {},
-    externals: CONFIG.externals || {},
-    resolve: {
-        root: [process.cwd() + '/node_modules', process.cwd() + '/public']
-    },
+    alias: {},
+    externals: {},
+    resolve: {},
     stats: {
         colors: true,
         modules: false,
         reasons: true
-    },
-    jshint: {
-        failOnHint: true,
     }
 };
 
-utils.expandPlugins(prodConfig);
+// extend webpack options by config/config.js
+utils.extendOptions(prodConfig);
 
 module.exports = prodConfig;
