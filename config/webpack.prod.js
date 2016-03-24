@@ -9,8 +9,7 @@ var prodConfig = {
     entry: utils.getEntrys(),
     output: {
         path: 'build/',
-        publicPath: '',
-        filename: utils.name('[name].js')
+        filename: utils.name('[name].[chunkhash].js')
     },
     module: {
         loaders: [{
@@ -20,28 +19,28 @@ var prodConfig = {
         }, {
             test: /\.css$/,
             loader: ExtractTextPlugin.extract('css', {
-                publicPath: './'
+                publicPath: 'http://img.cdn/'
             })
         }, {
-            test: /\.scss$/,
-            loader: 'style!css!sass'
-        }, {
-            test: /\.styl$/,
-            loader: 'style!css!stylus'
-        }, {
-            test: /\.(png|jpg|ttf)$/,
+            test: /\.(png|jpg)$/,
             loader: 'url',
             query: {
-                name: utils.name('[name].[ext]'),
-                limit: 8172
+                name: utils.name('[name].[hash].[ext]', 'img'),
+                limit: 1
+            }
+        }, {
+            test: /\.(ttf)$/,
+            loader: 'url',
+            query: {
+                name: utils.name('[name].[hash].[ext]')
             }
         }, {
             test: /\.html$/,
-            loader: 'html?-minimize&interpolate'
+            loader: 'html?-minimize&interpolate&root=../../..'
         }]
     },
     plugins: [
-        new ExtractTextPlugin(utils.name('[name].css')),
+        new ExtractTextPlugin(utils.name('[name].[contenthash].css')),
         new webpack.optimize.CommonsChunkPlugin('common', utils.name('common.js')),
         new webpack.optimize.UglifyJsPlugin(),
         new webpack.DefinePlugin({

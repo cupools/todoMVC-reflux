@@ -1,6 +1,6 @@
+/*jshint esnext:true*/
 'use strict';
 
-require('normalize.css');
-require('weui');
-
-require('./aboutus.css');
+import 'css/normalize.css';
+import 'weui';
+import './aboutus.css';

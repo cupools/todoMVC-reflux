@@ -34,10 +34,10 @@
     background-size: 40px 40px;
 }
 .smiley li:nth-child(3)::after {
-    background: url(/public/images/smiley/Smiley-3_256.png) no-repeat;
+    background: url(../../images/smiley/Smiley-3_256.png) no-repeat;
     background-size: 40px 40px;
 }
 .smiley li:nth-child(4)::after {
-    background: url(/public/images/smiley/Smiley-4_256.png) no-repeat;
+    background: url(../../images/smiley/Smiley-4_256.png) no-repeat;
     background-size: 40px 40px;
 }

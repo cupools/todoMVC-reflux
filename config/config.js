@@ -5,15 +5,19 @@ module.exports = {
                 'common.js': ['index', 'aboutus']
             },
             path: 'js/',
-            publicPath: 'http://cdn.com'
+            publicPath: 'http://cdn.com/'
         },
         css: {
             path: 'css/',
-            publicPath: 'http://css.cdn.com'
+            publicPath: 'http://css.cdn.com/'
         },
         img: {
             path: 'img/',
-            publicPath: 'http://img.cdn.com'
+            publicPath: 'http://img.cdn.com/'
+        },
+        other: {
+            path: 'resource/',
+            publicPath: 'http://resource.cdn.com/'
         }
     },
     webpack: {
@@ -32,7 +36,7 @@ module.exports = {
         }
     },
     optimize: {
-        hash: 6,
+        hash: 0,
         limit: 8192,
         uglifyjs: {
             except: ['$', 'exports', 'require']

@@ -21,12 +21,6 @@ var devConfig = {
             test: /\.css$/,
             loader: 'style!css?importLoaders=1'
         }, {
-            test: /\.scss$/,
-            loader: 'style!css!sass?sourceMap'
-        }, {
-            test: /\.styl$/,
-            loader: 'style!css!stylus?sourceMap'
-        }, {
             test: /\.(png|jpg|ttf)$/,
             loader: 'url',
             query: {

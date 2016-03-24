@@ -1,18 +1,18 @@
 'use strict';
 
-var glob = require('glob'),
+const glob = require('glob'),
     CONFIG = require('./config');
 
 /**
  * factory of glob method
  */
 function factory(options) {
-    var reg = options.reg,
+    let reg = options.reg,
         keyFn = options.keyFn || getBaseName,
         valFn = options.valFn;
 
     return function() {
-        var arr = glob.sync(reg),
+        let arr = glob.sync(reg),
             ret = {},
             keys, vals;
 
@@ -45,7 +45,7 @@ function getExtname(path) {
  * append webpack-dev-server and HMR middleware to entry options
  */
 function middleware(obj) {
-    var keys = Object.keys(obj),
+    let keys = Object.keys(obj),
         plugins = ([]).splice.call(arguments, 1);
 
     keys.forEach(function(key) {
@@ -64,9 +64,9 @@ function middleware(obj) {
  */
 function expandPlugins(options) {
     // html-webpack-plugin, build html template
-    var HtmlWebpackPlugin = require('html-webpack-plugin');
+    let HtmlWebpackPlugin = require('html-webpack-plugin');
 
-    var map = factory({
+    let map = factory({
             reg: 'public/views/*/*.html',
             keyFn: function(path) {
                 return (/[^\/]+?\.\w+/).exec(path)[0];
@@ -91,7 +91,7 @@ function expandPlugins(options) {
 
     // HRM middleware
     if(CONFIG.HMR) {
-        var webpack = require('webpack');
+        let webpack = require('webpack');
         
         if(CONFIG.HMR) {
             options.plugins.push(
@@ -118,29 +118,32 @@ function extendOptions(options) {
     expandPlugins(options);
     extendLoader(options);
 
-    var deepAssign = require('deep-assign');
+    let deepAssign = require('deep-assign');
     deepAssign(options, CONFIG.webpack);
 }
 
 /**
  * name output by config, includes [hash] and [path]
  */
-function name(file) {
-    file = appendHash(file);
+function name(file, type) {
+    file = updateHash(file);
+    file = updatePath(file, type);
+
     return file;
 }
 
 /**
  * append hash to specified file
  */
-function appendHash(file) {
-    var reg = /([\w\W]+)(\.[^\.]+)$/,
-        tmpl = '.[hash:\\d]',
+function updateHash(file) {
+    let reg = /\[(\w*?hash\w*?)\]/,
         m = reg.exec(file),
         hash = CONFIG.optimize.hash;
 
-    if (hash && m && m[1] && m[2]) {
-        return m[1] + tmpl.replace(/\\d/, hash) + m[2];
+    if (hash && m) {
+        return file.replace(reg, `[$1:${hash}]`);
+    } else if(!hash) {
+        return file.replace(reg, '');
     } else {
         return file;
     }
@@ -149,23 +152,31 @@ function appendHash(file) {
 /**
  * append path to specified file
  */
-function appendPath(file) {
-    var reg = {
-            img: /png|jpg|jpeg|gif|webp/,
-            js: /js/,
-            css: /css/
+function updatePath(file, type) {
+    let reg = {
+            img: /\.(png|jpg|jpeg|gif|webp)$/,
+            js: /\.js$/,
+            css: /\.css$/
         };
 
-    if(reg.img.exec(file)) {
-
+    if(reg.js.exec(file)) {
+        return `${CONFIG.bundle.js.path}${file}`;
+    } else if(reg.css.exec(file)) {
+        return `${CONFIG.bundle.css.path}${file}`;
+    } else if(reg.img.exec(file)) {
+        return `${CONFIG.bundle.img.path}${file}`;
+    } else if(reg[type]) {
+        return `${CONFIG.bundle[type].path}${file}`;
     }
+
+    return file;
 }
 
 /**
  * get IP address
  */
 function getIP() {
-    var interfaces = require('os').networkInterfaces(),
+    let interfaces = require('os').networkInterfaces(),
         IPv4 = '127.0.0.1', alias;
 
     Object.keys(interfaces).forEach(function(key) {
@@ -197,6 +208,5 @@ module.exports = {
     name: name,
     middleware: middleware,
     extendOptions: extendOptions,
-    appendHash: appendHash,
     getIP: getIP
 };
