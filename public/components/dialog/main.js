@@ -1,7 +1,6 @@
 'use strict';
 
-var tmpl = require('./dialog.html'),
-    style = require('./style.css');
+var tmpl = require('./dialog.html');
 
 var dom = null;
 
@@ -24,11 +23,11 @@ function show(content, title) {
     });
 
     document.body.appendChild(dom);
-};
+}
 
 function hide() {
     return dom && dom.parentNode.removeChild(dom);
-};
+}
 
 exports.show = show;
 exports.hide = hide;

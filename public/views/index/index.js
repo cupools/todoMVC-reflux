@@ -2,7 +2,7 @@
 'use strict';
 
 import 'css/normalize.css';
-import 'weui';
+import 'bower_components/weui';
 import './index.css';
 
 import $ from 'zepto';

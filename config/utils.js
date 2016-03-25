@@ -89,15 +89,23 @@ function expandPlugins(options) {
         }));
     });
 
-    // HRM middleware
-    if(CONFIG.HMR) {
-        let webpack = require('webpack');
-        
-        if(CONFIG.HMR) {
+    let webpack = require('webpack');
+
+    if (process.env.NODE_ENV === 'development') {
+        // HRM middleware
+        if (CONFIG.HMR) {
             options.plugins.push(
                 new webpack.optimize.OccurenceOrderPlugin(),
                 new webpack.HotModuleReplacementPlugin(),
                 new webpack.NoErrorsPlugin()
+            );
+        }
+
+    } else if (process.env.NODE_ENV === 'production') {
+        // CommonsChunkPlugin, by config.chunk
+        for (let file in CONFIG.bundle.chunk) {
+            options.plugins.push(
+                new webpack.optimize.CommonsChunkPlugin(file, CONFIG.bundle.chunk.file)
             );
         }
     }
@@ -133,7 +141,7 @@ function name(file, type) {
 }
 
 /**
- * append hash to specified file
+ * update hash to specified file
  */
 function updateHash(file) {
     let reg = /\[(\w*?hash\w*?)\]/,
@@ -142,7 +150,7 @@ function updateHash(file) {
 
     if (hash && m) {
         return file.replace(reg, `[$1:${hash}]`);
-    } else if(!hash) {
+    } else if (!hash) {
         return file.replace(reg, '');
     } else {
         return file;
@@ -150,23 +158,23 @@ function updateHash(file) {
 }
 
 /**
- * append path to specified file
+ * update path to specified file
  */
 function updatePath(file, type) {
     let reg = {
-            img: /\.(png|jpg|jpeg|gif|webp)$/,
-            js: /\.js$/,
-            css: /\.css$/
-        };
+        image: /\.(png|jpg|jpeg|gif|webp)$/,
+        js: /\.js$/,
+        css: /\.css$/
+    };
 
-    if(reg.js.exec(file)) {
-        return `${CONFIG.bundle.js.path}${file}`;
-    } else if(reg.css.exec(file)) {
-        return `${CONFIG.bundle.css.path}${file}`;
-    } else if(reg.img.exec(file)) {
-        return `${CONFIG.bundle.img.path}${file}`;
-    } else if(reg[type]) {
-        return `${CONFIG.bundle[type].path}${file}`;
+    if (reg[type]) {
+        return `${CONFIG.bundle.path[type]}${file}`;
+    } else if (reg.js.exec(file)) {
+        return `${CONFIG.bundle.path.js}${file}`;
+    } else if (reg.css.exec(file)) {
+        return `${CONFIG.bundle.path.css}${file}`;
+    } else if (reg.image.exec(file)) {
+        return `${CONFIG.bundle.path.image}${file}`;
     }
 
     return file;
@@ -177,7 +185,8 @@ function updatePath(file, type) {
  */
 function getIP() {
     let interfaces = require('os').networkInterfaces(),
-        IPv4 = '127.0.0.1', alias;
+        IPv4 = '127.0.0.1',
+        alias;
 
     Object.keys(interfaces).forEach(function(key) {
         alias = 0;

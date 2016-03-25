@@ -9,7 +9,8 @@ var prodConfig = {
     entry: utils.getEntrys(),
     output: {
         path: 'build/',
-        filename: utils.name('[name].[chunkhash].js')
+        filename: utils.name('[name].[chunkhash].js'),
+        publicPath: CONFIG.bundle.publicPath || '/'
     },
     module: {
         loaders: [{
@@ -18,34 +19,31 @@ var prodConfig = {
             excludes: /node_modules/
         }, {
             test: /\.css$/,
-            loader: ExtractTextPlugin.extract('css', {
-                publicPath: 'http://img.cdn/'
-            })
+            loader: ExtractTextPlugin.extract('css')
         }, {
             test: /\.(png|jpg)$/,
             loader: 'url',
             query: {
-                name: utils.name('[name].[hash].[ext]', 'img'),
-                limit: 1
+                name: utils.name('[name].[hash].[ext]', 'image'),
+                limit: CONFIG.optimize.limit
             }
         }, {
             test: /\.(ttf)$/,
             loader: 'url',
             query: {
-                name: utils.name('[name].[hash].[ext]')
+                name: utils.name('[name].[hash].[ext]', 'font')
             }
         }, {
             test: /\.html$/,
-            loader: 'html?-minimize&interpolate&root=../../..'
+            loader: 'html?-minimize&interpolate'
         }]
     },
     plugins: [
-        new ExtractTextPlugin(utils.name('[name].[contenthash].css')),
-        new webpack.optimize.CommonsChunkPlugin('common', utils.name('common.js')),
-        new webpack.optimize.UglifyJsPlugin(),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"production"'
-        })
+        }),
+        new ExtractTextPlugin(utils.name('[name].[contenthash].css')),
+        new webpack.optimize.UglifyJsPlugin(CONFIG.optimize.uglifyjs)
     ],
     alias: {},
     externals: {},

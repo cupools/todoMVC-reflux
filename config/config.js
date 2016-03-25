@@ -1,42 +1,27 @@
 module.exports = {
-    bundle: {
-        js: {
-            chunk: {
-                'common.js': ['index', 'aboutus']
-            },
-            path: 'js/',
-            publicPath: 'http://cdn.com/'
-        },
-        css: {
-            path: 'css/',
-            publicPath: 'http://css.cdn.com/'
-        },
-        img: {
-            path: 'img/',
-            publicPath: 'http://img.cdn.com/'
-        },
-        other: {
-            path: 'resource/',
-            publicPath: 'http://resource.cdn.com/'
+    webpack: {
+        externals: {},
+        resolve: {
+            root: [process.cwd() + '/node_modules', process.cwd() + '/public'],
+            alias: {
+                zepto: 'bower_components/webpack-zepto'
+            }
         }
     },
-    webpack: {
-        output: {
-            path: 'build/',
-            publicPath: ''
+    bundle: {
+        chunk: {
+            'common.js': ['index', 'aboutus']
         },
-        alias: {
-            
+        path: {
+            js: 'js/',
+            css: 'css/',    
+            image: 'img/',
+            font: 'font/'
         },
-        externals: {
-            'zepto': 'Zepto'
-        },
-        resolve: {
-            root: [process.cwd() + '/node_modules', process.cwd() + '/public']
-        }
+        publicPath: './'
     },
     optimize: {
-        hash: 0,
+        hash: 6,
         limit: 8192,
         uglifyjs: {
             except: ['$', 'exports', 'require']

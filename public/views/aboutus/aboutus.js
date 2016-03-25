@@ -2,5 +2,5 @@
 'use strict';
 
 import 'css/normalize.css';
-import 'weui';
+import 'bower_components/weui';
 import './aboutus.css';

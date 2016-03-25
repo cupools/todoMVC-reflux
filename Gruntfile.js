@@ -18,6 +18,15 @@ module.exports = function(grunt) {
         webpack: {
             release: require('./config/webpack.prod.js')
         },
+        jshint: {
+            options: {
+                jshintrc: '.jshintrc'
+            },
+            all: [
+                'public/**/*.js',
+                '!public/bower_components/**/*.js'
+            ]
+        },
         watch: {
             express: {
                 files: [
@@ -44,6 +53,7 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-express-server');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-weinre');
     grunt.loadNpmTasks('grunt-webpack');
 
@@ -57,6 +67,7 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('release', [
+        'jshint',
         'clean',
         'webpack:release'
     ]);
