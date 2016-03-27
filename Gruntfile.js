@@ -16,7 +16,7 @@ module.exports = function(grunt) {
             }
         },
         webpack: {
-            release: require('./config/webpack.prod.js')
+            release: utils.extendOptions(require('./config/webpack.prod.js'))
         },
         jshint: {
             options: {

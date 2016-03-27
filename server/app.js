@@ -20,7 +20,8 @@ if (CONFIG.weinre.enable && CONFIG.weinre.inject) {
 }
 
 // webpack middleware
-compiler = webpack(webpackDevConf);
+compiler = webpack(utils.extendOptions(webpackDevConf));
+
 app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
     quiet: false,

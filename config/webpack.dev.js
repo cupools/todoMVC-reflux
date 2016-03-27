@@ -43,7 +43,4 @@ var devConfig = {
     devtool: 'cheap-module-eval-source-map'
 };
 
-// extend webpack options by config/config.js
-utils.extendOptions(devConfig);
-
 module.exports = devConfig;

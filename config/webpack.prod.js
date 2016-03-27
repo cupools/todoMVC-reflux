@@ -55,7 +55,4 @@ var prodConfig = {
     }
 };
 
-// extend webpack options by config/config.js
-utils.extendOptions(prodConfig);
-
 module.exports = prodConfig;

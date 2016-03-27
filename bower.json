@@ -17,6 +17,7 @@
     "tests"
   ],
   "dependencies": {
-    "weui": "^0.4.0"
+    "weui": "^0.4.0",
+    "webpack-zepto": "git@github.com:RexMorgan/webpack-zepto.git"
   }
 }

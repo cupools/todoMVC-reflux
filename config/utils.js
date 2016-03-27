@@ -128,6 +128,8 @@ function extendOptions(options) {
 
     let deepAssign = require('deep-assign');
     deepAssign(options, CONFIG.webpack);
+
+    return options;
 }
 
 /**
