@@ -8,7 +8,7 @@ var express = require('express'),
     Mock = require('mockjs'),
     mockData = require('./mock'),
     CONFIG = require('../config/config'),
-    utils = require('../config/utils'),
+    utils = require('../lib/utils'),
     app = express(),
     compiler;
 

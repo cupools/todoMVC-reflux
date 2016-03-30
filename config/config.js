@@ -18,7 +18,7 @@ module.exports = {
             image: 'img/',
             font: 'font/'
         },
-        publicPath: './'
+        publicPath: 'http://cdn.com/'
     },
     optimize: {
         hash: 6,
@@ -31,8 +31,5 @@ module.exports = {
         inject: false,
         port: 9001
     },
-    HMR: true,
-    extend: {
-        'es6': true
-    }
+    HMR: true
 };

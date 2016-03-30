@@ -1,7 +1,7 @@
 'use strict';
 
 var CONFIG = require('./config'),
-    utils = require('./utils'),
+    utils = require('../lib/utils'),
     webpack = require('webpack'),
     ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -9,7 +9,7 @@ var prodConfig = {
     entry: utils.getEntrys(),
     output: {
         path: 'build/',
-        filename: utils.name('[name].[chunkhash].js'),
+        filename: utils.name('[name].[hash].js'),
         publicPath: CONFIG.bundle.publicPath || '/'
     },
     module: {

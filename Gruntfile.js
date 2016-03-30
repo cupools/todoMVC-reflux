@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
     'use strict';
 
-    var utils = require('./config/utils');
+    var utils = require('./lib/utils');
 
     var initConfig = {
         pkg: grunt.file.readJSON('package.json'),

@@ -1,7 +1,7 @@
 'use strict';
 
 var CONFIG = require('./config'),
-    utils = require('./utils'),
+    utils = require('../lib/utils'),
     webpack = require('webpack');
 
 
