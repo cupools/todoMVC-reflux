@@ -3,6 +3,7 @@
 var CONFIG = require('./config'),
     utils = require('../lib/utils'),
     webpack = require('webpack'),
+    ImgSpritePlugin = require('img-sprite-plugin'),
     ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var prodConfig = {
@@ -39,6 +40,7 @@ var prodConfig = {
         }]
     },
     plugins: [
+        new ImgSpritePlugin(),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"production"'
         }),

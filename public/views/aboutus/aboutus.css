@@ -26,18 +26,18 @@
     height: 40px;
 }
 .smiley li:nth-child(1)::after {
-    background: url(../../images/smiley/Smiley-1_256.png) no-repeat;
+    background: url(../../images/smiley/__sprite__Smiley-1_256.png) no-repeat;
     background-size: 40px 40px;
 }
 .smiley li:nth-child(2)::after {
-    background: url(../../images/smiley/Smiley-2_256.png) no-repeat;
+    background: url(../../images/smiley/__sprite__Smiley-2_256.png) no-repeat;
     background-size: 40px 40px;
 }
 .smiley li:nth-child(3)::after {
-    background: url(../../images/smiley/Smiley-3_256.png) no-repeat;
+    background: url(../../images/smiley/__sprite__Smiley-3_256.png) no-repeat;
     background-size: 40px 40px;
 }
 .smiley li:nth-child(4)::after {
-    background: url(../../images/smiley/Smiley-4_256.png) no-repeat;
+    background: url(../../images/smiley/__sprite__Smiley-4_256.png) no-repeat;
     background-size: 40px 40px;
 }
