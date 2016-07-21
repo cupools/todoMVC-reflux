@@ -18,7 +18,7 @@ module.exports = {
             image: 'img/',
             font: 'font/'
         },
-        publicPath: 'http://cdn.com/'
+        publicPath: '/'
     },
     optimize: {
         hash: 6,

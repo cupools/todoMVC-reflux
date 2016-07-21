@@ -36,7 +36,7 @@ var prodConfig = {
             }
         }, {
             test: /\.html$/,
-            loader: 'html?-minimize&interpolate'
+            loader: 'html?-minimize&interpolate&root=../../../'
         }]
     },
     plugins: [
